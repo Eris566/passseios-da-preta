@@ -6,7 +6,6 @@ const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
   "00000000-0000-4000-8000-000000000000";
 
 const { d1, r2 } = hostingConfig;
-
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
 export default defineConfig(async () => {
@@ -23,9 +22,7 @@ export default defineConfig(async () => {
         : {}),
     },
     plugins: [
-      vinext({
-        output: "static",
-      }),
+      vinext(),
     ],
     build: {
       outDir: "dist",
