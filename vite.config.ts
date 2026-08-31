@@ -39,9 +39,6 @@ export default defineConfig(async () => {
   process.env.WRANGLER_LOG_PATH ??= ".wrangler/logs";
   process.env.MINIFLARE_REGISTRY_PATH ??= ".wrangler/registry";
 
-  // Desativado o carregamento do plugin Cloudflare para evitar que intercepte a aplicação
-  // const { cloudflare } = await import("@cloudflare/vite-plugin");
-
   return {
     server: {
       host: "0.0.0.0",
@@ -53,11 +50,6 @@ export default defineConfig(async () => {
     plugins: [
       vinext(),
       react(),
-      // cloudflare({
-      //   viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
-      //   inspectorPort: false,
-      //   config: localBindingConfig,
-      // }),
     ],
     build: {
       outDir: 'dist',
