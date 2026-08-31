@@ -1,1 +1,15 @@
-node_modules
+# Dependências do Node
+node_modules/
+
+# Pastas de ferramentas e caches
+.openai
+.wrangler
+
+# Variáveis de ambiente e senhas
+.env
+.env.local
+
+# Builds de produção
+.next/
+dist/
+out/

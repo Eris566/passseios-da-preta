@@ -1,5 +1,6 @@
 import vinext from "vinext";
 import { defineConfig } from "vite";
+import react from '@vitejs/plugin-react';
 import hostingConfig from "./.openai/hosting.json";
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
@@ -51,11 +52,16 @@ export default defineConfig(async () => {
     },
     plugins: [
       vinext(),
+      react(),
       // cloudflare({
       //   viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
       //   inspectorPort: false,
       //   config: localBindingConfig,
       // }),
     ],
+    build: {
+      outDir: 'dist',
+      emptyOutDir: true,
+    },
   };
 });
