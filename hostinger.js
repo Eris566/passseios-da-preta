@@ -12,22 +12,27 @@ const prodServerPath = path.join(
   "prod-server.js"
 );
 
-const { startProdServer } = await import(
-  pathToFileURL(prodServerPath).href
-);
+(async () => {
+  const { startProdServer } = await import(
+    pathToFileURL(prodServerPath).href
+  );
 
-const port = Number(process.env.PORT || 3000);
-const host = process.env.HOST || "0.0.0.0";
-const outDir = path.join(root, "dist");
+  const port = Number(process.env.PORT || 3000);
+  const host = process.env.HOST || "0.0.0.0";
+  const outDir = path.join(root, "dist");
 
-console.log("Iniciando servidor Vinext:", {
-  host,
-  port,
-  outDir,
-});
+  console.log("Iniciando servidor Vinext:", {
+    host,
+    port,
+    outDir,
+  });
 
-await startProdServer({
-  port,
-  host,
-  outDir,
+  await startProdServer({
+    port,
+    host,
+    outDir,
+  });
+})().catch((error) => {
+  console.error("Erro ao iniciar o servidor Vinext:", error);
+  process.exit(1);
 });
