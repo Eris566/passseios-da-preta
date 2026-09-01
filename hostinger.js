@@ -1,26 +1,33 @@
-import { spawn } from "node:child_process";
-import { fileURLToPath } from "node:url";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-const vinextPath = fileURLToPath(
-  new URL("./node_modules/vinext/dist/cli.js", import.meta.url)
+const root = path.dirname(fileURLToPath(import.meta.url));
+
+const prodServerPath = path.join(
+  root,
+  "node_modules",
+  "vinext",
+  "dist",
+  "server",
+  "prod-server.js"
 );
 
-console.log("Iniciando Vinext:", vinextPath);
+const { startProdServer } = await import(
+  pathToFileURL(prodServerPath).href
+);
 
-const child = spawn(process.execPath, [vinextPath, "start"], {
-  stdio: "inherit",
-  env: {
-    ...process.env,
-    HOST: "0.0.0.0",
-    PORT: process.env.PORT || "3000",
-  },
+const port = Number(process.env.PORT || 3000);
+const host = process.env.HOST || "0.0.0.0";
+const outDir = path.join(root, "dist");
+
+console.log("Iniciando servidor Vinext:", {
+  host,
+  port,
+  outDir,
 });
 
-child.on("error", (error) => {
-  console.error("Erro ao iniciar o Vinext:", error);
-  process.exit(1);
-});
-
-child.on("exit", (code) => {
-  process.exit(code ?? 1);
+await startProdServer({
+  port,
+  host,
+  outDir,
 });
