@@ -1,10 +1,18 @@
-import { startProdServer } from "vinext/server/prod-server";
+import { spawn } from "node:child_process";
 
-const port = Number(process.env.PORT || 3000);
-const host = process.env.HOST || "0.0.0.0";
+const child = spawn("npm", ["start"], {
+  stdio: "inherit",
+  env: {
+    ...process.env,
+    HOST: process.env.HOST || "0.0.0.0",
+  },
+});
 
-await startProdServer({
-  port,
-  host,
-  outDir: "./dist",
+child.on("error", (error) => {
+  console.error("Erro ao iniciar o Vinext:", error);
+  process.exit(1);
+});
+
+child.on("exit", (code) => {
+  process.exit(code ?? 1);
 });
