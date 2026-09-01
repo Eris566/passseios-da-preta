@@ -1,10 +1,10 @@
 import { spawn } from "node:child_process";
 
-const child = spawn("npm", ["start"], {
+const child = spawn("node_modules/.bin/vinext", ["start"], {
   stdio: "inherit",
   env: {
     ...process.env,
-    HOST: process.env.HOST || "0.0.0.0",
+    HOST: "0.0.0.0",
   },
 });
 
